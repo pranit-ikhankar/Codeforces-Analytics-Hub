@@ -9,8 +9,13 @@ async function getData (req, res, next) {
             error.status = 404;
             return next(error);
         }
-        const filtered_data = response.result.filter((submission) => submission.verdict === 'OK');  
-        res.status(200).json(filtered_data);
+        const filtered_data = response.result.filter((submission) => submission.verdict === 'OK');
+        const tags = filtered_data.flatMap((submission) => submission.problem.tags);
+        const tagsCount = tags.reduce((acc, tag) => {
+            acc[tag] = (acc[tag] || 0) + 1; 
+            return acc;
+        }, {});
+        res.status(200).json(tagsCount);
     } catch(error) {
         error.status = 500;
         error.message = "Internal Server Error";
