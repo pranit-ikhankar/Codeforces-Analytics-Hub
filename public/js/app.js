@@ -13,7 +13,7 @@ btn.addEventListener('click', async () => {
     }
 
     try {
-        let response = await fetch(`https://codeforces-analytics-hub.onrender.com/api/users/${handle}`);
+        let response = await fetch(`/api/users/${handle}`);
         let data = await response.json();
 
         if (!response.ok) {
